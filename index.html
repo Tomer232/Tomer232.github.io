@@ -3,151 +3,158 @@
     <head>
         <meta charset="UTF-8"> 
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!--<meta http-equiv="refresh" content="7">-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.min.css">
         <link rel="stylesheet" href="PortfolioV1.css">
-        <title>Pesonal Portfolio</title>
+        <title>Personal Portfolio - Tomer Karmazin</title>
     </head>
     <body>
-
-        <nav>
+        <nav class="navbar">
             <div class="nav-logo">
-                <a href="#">
-                    <img src="Documents\icon.svg">
+                <a href="#home">
+                    <img src="Documents/icon.svg" alt="Portfolio Logo">
                 </a>
             </div>
 
             <ul class="nav-links">
-                <li class="link"><a href="#">Home</a></li>
-                <li id="link1" class="link"><a href="#">Projects</a></li>
-                <li id="link2" class="link"><a href="#">Achievement</a></li>
-                <li id="link3" class="link"><a href="#">About</a></li>
+                <li class="link"><a href="#home">Home</a></li>
+                <li class="link"><a href="#projects">Projects</a></li>
+                <li class="link"><a href="#widgets">Widgets</a></li>
+                <li class="link"><a href="#about">Contact</a></li>
             </ul>
-            <button class="btn">About Me</button>
+            <button class="btn" id="about-btn">About Me</button>
         </nav>
 
-        <header class="container">
+        <header id="home" class="container">
             <div class="content">
                 <span class="blur"></span>
                 <span class="blur"></span>
-                <!--<h4>CREATE YOUR SITE LIKE A PRO</h4>-->
-                <H1>Hi, I'm <span>Tomer</span>, Computer Science Student</H1>
-                <p>
-                    JAVA • PYTHON • C/C++ • HTML • CSS • JS • SQL
+                <h1>Hi, I'm <span>Tomer</span>, Computer Science Student</h1>
+                <p class="skills">
+                    PYTHON • JAVA • JS • HTML • CSS • C/C++ • SQL
                 </p>
-                <button onclick="window.open('Documents/Tomer Karmazin CV.pdf', '_blank');" class="btn">CHECK OUT MY CV!</button>
+                <button class="btn cv-btn" onclick="window.open('Documents/Tomer Karmazin CV.pdf', '_blank');">
+                    CHECK OUT MY CV!
+                </button>
             </div>
-            <div class="Programming-photo">
-                <img src="Documents/Programming-photo.png">
+            <div class="programming-photo">
+                <img src="Documents/Programming-photo.png" alt="Programming Illustration">
             </div>
         </header>
 
-        <section class="container">
-            <button onclick="openLinkedInProfile()" class="btn"><a href="#"><i class="ri-linkedin-box-line"></i></a> Linkedin</button>
-            <button onclick="openGithubProfile()" class="btn"> <a href="#"><i class="ri-github-fill"></i></a>Github</button>
-            <h2 class="header">MY PROJECTS</h2>
+        <section id="projects" class="container">
+            <div class="social-links">
+                <button class="btn social-btn" data-social="linkedin">
+                    <i class="ri-linkedin-box-line"></i> LinkedIn
+                </button>
+                <button class="btn social-btn" data-social="github">
+                    <i class="ri-github-fill"></i> Github
+                </button>
+            </div>
+                    
+            <h2 class="section-title">MY PROJECTS</h2>
             <div class="projects">
+                <!-- Pathfinding Algorithm Game -->
                 <div class="card">
-                    <span><i class="ri-folder-line"></i></span>
-                    <h4>python game 1</h4>
-                    <p>
-                        bla bla bla bla bla not relly anything change later
-                    </p>
-                    <a href="#">join now</a>
+                    <div class="content">
+                        <div class="title-container">
+                            <span class="card-icon"><i class="ri-gamepad-line"></i></span>
+                            <h4>Pathfinding Algorithm Visualization</h4>
+                        </div>
+                        <div class="video-container">
+                            <video class="project-video" controls>
+                                <source src="Documents/Pathfinding-video.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <div class="project-details">
+                            <h5><ul>
+                                <li>implemented bfs, dfs, a*, and bi-rrt* algorithms in a python grid environment</li>
+                                <li>used pygame for real-time pathfinding with a button panel for algorithm selection</li>
+                                <li>logged algorithm metadata like runtime and performance in excel using openpyxl</li>
+                                <li>optimized animations and grid updates for smooth execution and user interaction</li>
+                                <li>built to deepen understanding of python and visualizing complex algorithms</li>
+                              </ul>
+                              </h5>
+                            <!-- Add your project description here -->
+                        </div>
+                    </div>
+                    <a href="https://github.com/Tomer232/pathfinding-playground" class="card-link" target="_blank">View Project</a>
                 </div>
+
+                <!-- Space Invaders Game -->
                 <div class="card">
-                    <span><i class="ri-folder-line"></i></span>
-                    <h4>python game 2</h4>
-                    <p>
-                        bla bla bla bla bla not relly anything change later
-                    </p>
-                    <a href="#">join now</a>
-                </div>
-                <div class="card">
-                    <span><i class="ri-folder-line"></i></span>
-                    <h4>java script game 1</h4>
-                    <p>
-                        bla bla bla bla bla not relly anything change later
-                    </p>
-                    <a href="#">join now</a>
-                </div>
-                <div class="card">
-                    <span><i class="ri-folder-line"></i></span>
-                    <h4>javascript game 2</h4>
-                    <p>
-                        bla bla bla bla bla not relly anything change later
-                    </p>
-                    <a href="#">join now</a>
+                    <div class="content">
+                        <div class="title-container">
+                            <span class="card-icon"><i class="ri-rocket-line"></i></span>
+                            <h4>Space Invaders Game</h4>
+                        </div>
+                        <div class="video-container">
+                            <video class="project-video" controls>
+                                <source src="Documents/Space_invaders-video.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <div class="project-details">
+                            <h5>
+                               <ul>
+                                <li>Built with Python using modular programming and OOP principles.</li>
+                                <li>Implemented collision detection for lasers, obstacles, and enemies.</li>
+                                <li>Improved code readability with clear class structures and naming conventions.</li>
+                                <li>Focused on enhancing Python skills and game development expertise.</li>
+                               </ul>
+                            </h5>
+                            <!-- Add your project description here -->
+                        </div>
+                    </div>
+                    <a href="https://github.com/Tomer232/Space_Invaders_V2" class="card-link" target="_blank">View Project</a>
                 </div>
             </div>
         </section>
 
-        <section class="container">
-            <h2 class="header">WIDGETS</h2>
+        <section id="widgets" class="container">
+            <h2 class="section-title">WIDGETS</h2>
             <p class="sub-header">
-                In this section you can see some of my JS widgets that i made
+                In this section you can see some of my JS widgets that I made
             </p>
             <div class="widgets">
-                <div class="card weather">
+                <div class="card">
                     <div class="content">
-                        <h4>wheater app</h4>
-                        <iframe class="weather-iframe" src="weather-widget/weather.html" id="child-iframe" width="650px" height="480px"></iframe>
-                        <!--<h3>0$</h3>
-                        <p>
-                            maybe an icon and some words..
-                        </p>-->
+                        <h4>Weather App</h4>
+                        <div class="iframe-container">
+                            <iframe class="weather-iframe" src="weather-widget/weather.html" title="Weather Widget"></iframe>
+                        </div>
                     </div>
-                    <button class="btn">github link</button>
+                    <button class="btn github-btn" data-social="weatherApp">Github</button>
                 </div>
-                <div class="card crypto">
+                <div class="card">
                     <div class="content">
-                        <h4>crypto price</h4>
-                        <iframe class="crypto-iframe" src="crypto-widget/crypto.html" id="child-iframe" width="650px" height="480px"></iframe>
-                        <!--<h3>0$</h3>
-                        <p>
-                            maybe an icon and some words..
-                        </p>-->
+                        <h4>Crypto Price</h4>
+                        <div class="iframe-container">
+                            <iframe class="crypto-iframe" src="crypto-widget/crypto.html" title="Crypto Widget"></iframe>
+                        </div>
                     </div>
-                    <button class="btn">github link</button>
-                </div>
-                <div class="card internet">
-                    <div class="content">
-                        <h4>internet speed test</h4>
-                        <iframe class="internet-iframe" src="internet-widget/internet.html" id="child-iframe" width="650px" height="480px"></iframe>
-                        <!--<h3>0$</h3>
-                        <p>
-                            maybe an icon and some words..
-                        </p>-->
-                    </div>
-                    <button class="btn">githublink</button>
+                    <button class="btn github-btn" data-social="cryptoApp">Github</button>
                 </div>
             </div>
         </section>
 
-        <footer class="container">
+        <footer id="about" class="container">
             <span class="blur"></span>
             <span class="blur"></span>
             <div class="column">
                 <div class="logo">
-                    <img src="Documents\icon.svg">
+                    <img src="Documents/icon.svg" alt="Footer Logo">
                 </div>
-                <p>
-                    some closing words beacuse why not lol 
-                </p>
                 <div class="socials">
-                    <a href="#"><i class="ri-linkedin-box-line"></i></a>
-                    <a href="#"><i class="ri-github-fill"></i></a>
+                    <a href="#" data-social="linkedin" aria-label="LinkedIn"><i class="ri-linkedin-box-line"></i></a>
+                    <a href="#" data-social="github" aria-label="GitHub"><i class="ri-github-fill"></i></a>
                 </div>
             </div>
             <div class="column">
                 <h4>Contact</h4>
                 <a href="#">Tomer Karmazin</a>
-                <a href="#">tomer@jeepsea.co.il</a>
+                <a href="mailto:tomer@jeepsea.co.il">tomer@jeepsea.co.il</a>
             </div>
-            <!--<div class="column">
-                <h4>nice quote</h4>
-                <a href="#">the qoute itself</a>
-            </div>-->
         </footer>
 
         <div class="scroll-top" onclick="scrollToTop()">
@@ -158,15 +165,19 @@
             <div class="popup-content">
                 <span class="close-btn" onclick="closePopup()">&times;</span>
                 <h2>About Me</h2>
-                <p class="text">Passionate software development student pursuing expertise in cutting-edge technologies.
-                     Committed to making a positive impact by creating innovative solutions in finance, AI, cyber security, and blockchain.
-                     Eager to contribute skills and knowledge to excel in the dynamic field of technology, with a goal to become a reliable and efficient professional.
-                     Currently dedicated to earning a degree in Computer Science.</p>
+                <p class="text">
+                    Passionate software development student pursuing expertise in cutting-edge technologies.
+                    Committed to making a positive impact by creating innovative solutions in finance, AI, cyber security, and blockchain.
+                    Eager to contribute skills and knowledge to excel in the dynamic field of technology, with a goal to become a reliable and efficient professional.
+                    Currently dedicated to earning a degree in Computer Science.
+                </p>
                 <br>
-                <p class="text">My skills are: Attention to details & precision.
+                <p class="text">
+                    My skills are: Attention to details & precision.
                     Problem solving & analytical thinking.
                     Understanding complex perspectives. Logical reasoning & critical thinking.
-                    Excellent communication & collaboration.</p>
+                    Excellent communication & collaboration.
+                </p>
             </div>
         </div>
 
@@ -177,4 +188,3 @@
         <script src="PortfolioV1.js"></script>
     </body>
 </html>
-

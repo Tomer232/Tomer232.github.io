@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="weather.css">
+    <title>Weather App</title>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="left-info">
+            <div class="pic-gradient"></div>
+            <div class="today-info">
+                <h2></h2>
+                <span></span>
+                <div>
+                    <i class='bx bx-current-location'></i>
+                    <span></span>
+                </div>
+            </div>
+            <div class="today-weather">
+                <i class='bx bx-sun'></i>
+                <h1 class="weather-temp">
+
+                </h1>
+                <h3></h3>
+            </div>
+        </div>
+
+        <div class="right-info">
+            <div class="day-info">
+                <div>
+                    <span class="title"></span>
+                    <span class="value"></span>
+                </div>
+                <div>
+                    <span class="title"></span>
+                    <span class="value"></span>
+                </div>
+                <div>
+                    <span class="title"></span>
+                    <span class="value"></span>
+                </div>
+            </div>
+
+            <ul class="days-list">
+                <li>
+                    <i class='bx bx-cloud'></i>
+                    <span></span>
+                    <span class="temp-day"></span>
+                </li>
+                <li>
+                    <i class='bx bx-cloud-rain'></i>
+                    <span></span>
+                    <span class="temp-day"></span>
+                </li>
+                <li>
+                    <i class='bx bx-sun'></i>
+                    <span></span>
+                    <span class="temp-day"></span>
+                </li>
+                <li>
+                    <i class='bx bx-cloud-drizzle'></i>
+                    <span></span>
+                    <span class="temp-day"></span>
+                </li>
+            </ul>
+
+            <div class="btn-container">
+                <button class="loc-button">Search Location</button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="weather.js"></script>
+
+</body>
+
+</html>

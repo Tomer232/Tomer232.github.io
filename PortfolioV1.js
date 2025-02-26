@@ -1,77 +1,87 @@
-function scrollToElement(elementSelector, instance=0){
-    // Select all elements that match the given selector
-    const elements = document.querySelectorAll(elementSelector);
-    // Check if there are elements matching theselector and if the requested instance exists
-    if(elements.length > instance){
-        // Scroll to the specified instance of the element
-        elements[instance].scrollIntoView({behavior: 'smooth'});
-    }
-}
-
-const link1 = document.getElementById("link1");
-const link2 = document.getElementById("link2");
-const link3 = document.getElementById("link3");
-
-link1.addEventListener('click', () =>{
-    scrollToElement('.header');
-});
-
-link2.addEventListener('click', () =>{
-    // Scroll to the second element with "header" class
-    scrollToElement('.header', 1);
-});
-
-link3.addEventListener('click', () =>{
-    scrollToElement('.column');
-});
-
-
-function toggleScrollTopButton() {
-    var scrollTopButton = document.querySelector('.scroll-top');
-
-    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-        scrollTopButton.style.display = 'block';
-    } else {
-        scrollTopButton.style.display = 'none';
-    }
-}
-
-function scrollToTop() {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
+// Navigation and Scroll Functionality
+document.addEventListener('DOMContentLoaded', () => {
+    // Handle smooth scrolling for all navigation links
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute('href');
+            document.querySelector(targetId).scrollIntoView({ behavior: 'smooth' });
+        });
     });
+
+    // Scroll to Top Button
+    const scrollTopButton = document.querySelector('.scroll-top');
+    
+    window.addEventListener('scroll', () => {
+        if (document.documentElement.scrollTop > 20) {
+            scrollTopButton.style.display = 'block';
+        } else {
+            scrollTopButton.style.display = 'none';
+        }
+    });
+
+    scrollTopButton.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+});
+
+// Popup Handling
+const popup = document.getElementById('popup');
+const aboutBtn = document.getElementById('about-btn');
+
+function togglePopup(show) {
+    popup.style.display = show ? 'block' : 'none';
 }
 
-window.onscroll = function () {
-    toggleScrollTopButton();
+aboutBtn.addEventListener('click', () => togglePopup(true));
+document.querySelector('.close-btn').addEventListener('click', () => togglePopup(false));
+
+// Close popup when clicking outside
+popup.addEventListener('click', (e) => {
+    if (e.target === popup) {
+        togglePopup(false);
+    }
+});
+
+// Social Links
+const socialLinks = {
+    linkedin: 'https://www.linkedin.com/in/tomer-karmazin-19182a22a/',
+    github: 'https://github.com/Tomer232',
+    weatherApp: 'https://github.com/Tomer232/JS-Weather-app',
+    cryptoApp: 'https://github.com/Tomer232/Crypto-price-tracker'
 };
 
+// Handle all social link clicks
+document.addEventListener('click', (e) => {
+    const socialTrigger = e.target.closest('[data-social]');
+    if (socialTrigger) {
+        const socialType = socialTrigger.getAttribute('data-social');
+        if (socialLinks[socialType]) {
+            window.open(socialLinks[socialType], '_blank');
+        }
+    }
+});
 
-function openPopup() {
-    document.getElementById("popup").style.display = "block";
+// Iframe Sizing
+function setupIframeResizing(iframeClass) {
+    const iframe = document.querySelector(`.${iframeClass}`);
+    if (iframe) {
+        iframe.addEventListener('load', () => {
+            try {
+                const height = iframe.contentDocument.body.scrollHeight;
+                const width = iframe.contentDocument.body.scrollWidth;
+                iframe.style.height = `${height}px`;
+                iframe.style.width = `${width}px`;
+            } catch (e) {
+                console.warn(`Unable to resize ${iframeClass}:`, e);
+            }
+        });
+    }
 }
 
-function closePopup() {
-    document.getElementById("popup").style.display = "none";
-}
-
-// Call openPopup function when the "About Me" button is clicked
-document.querySelector('.btn').addEventListener('click', openPopup);
-
-function openLinkedInProfile() {
-    window.open('https://www.linkedin.com/in/tomer-karmazin-19182a22a/', '_blank');
-}
-
-function openGithubProfile() {
-    window.open('https://github.com/Tomer232', '_blank');
-}
-
-function sizingIframe(){ //not sure?
-    let iframe = document.querySelector("#child-iframe");
-
-    iframe.addEventListener('load', function() {
-		iframe.style.height = iframe.contentDocument.body.scrollHeight + 'px';
-		iframe.style.width = iframe.contentDocument.body.scrollWidth + 'px';
-	});	
-}
+// Setup iframe sizing for both widgets
+setupIframeResizing('weather-iframe');
+setupIframeResizing('crypto-iframe');
