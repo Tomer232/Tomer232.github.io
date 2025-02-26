@@ -477,7 +477,7 @@ footer .column > a:hover {
     font-size: 20px;
 }
 
-/* Responsive Design */
+/* Responsive Design - Original Breakpoints */
 @media (width < 900px) {
     .nav-links {
         display: none;
@@ -523,5 +523,115 @@ footer .column > a:hover {
 
     footer {
         grid-template-columns: 1fr;
+    }
+}
+
+/* Enhanced Mobile Responsiveness */
+@media (max-width: 768px) {
+    .container {
+        padding: 3rem 1rem;
+    }
+
+    /* Fix header content on mobile */
+    header .content h1 {
+        font-size: 2rem;
+        line-height: 2.5rem;
+    }
+    
+    /* Make sure skills text wraps properly */
+    .skills {
+        font-size: 0.9rem;
+        word-break: break-word;
+    }
+    
+    /* Make projects and widgets take full width */
+    .projects, .widgets {
+        grid-template-columns: 1fr;
+        max-width: 100%;
+        gap: 2rem;
+    }
+    
+    /* Adjust card size and padding for mobile */
+    .card {
+        padding: 1rem;
+        min-height: auto;
+        width: 100%;
+    }
+    
+    /* Fix project videos to be responsive */
+    .video-container, .project-video {
+        height: auto;
+        max-height: 250px;
+    }
+    
+    /* Fix widgets iframe sizing */
+    .widgets .card {
+        height: auto;
+        min-height: 450px;
+    }
+    
+    .iframe-container {
+        height: 350px;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .weather-iframe, .crypto-iframe {
+        width: 100% !important;
+        height: 100% !important;
+        transform: scale(0.95);
+        transform-origin: 0 0;
+        overflow: hidden;
+    }
+    
+    /* Improve about popup for mobile */
+    .popup-content {
+        width: 90%;
+        max-width: 350px;
+        padding: 1rem;
+    }
+    
+    .text {
+        font-size: 1rem;
+    }
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
+    /* Further adjust header */
+    header .content h1 {
+        font-size: 1.75rem;
+        line-height: 2.25rem;
+    }
+    
+    /* Adjust buttons for smaller screens */
+    .btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    /* Fix project detail text */
+    .project-details h5 {
+        font-size: 0.75rem;
+        line-height: 1.8;
+    }
+    
+    /* Smaller project cards */
+    .video-container, .project-video {
+        max-height: 200px;
+    }
+    
+    /* Adjust widget containers */
+    .iframe-container {
+        height: 300px;
+    }
+    
+    .weather-iframe, .crypto-iframe {
+        transform: scale(0.9);
+    }
+    
+    /* Further adjust projects margin */
+    .projects, .widgets {
+        margin-top: 2rem;
     }
 }
