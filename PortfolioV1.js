@@ -65,16 +65,61 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// Iframe Sizing
+// iframe handling for better mobile responsiveness
+function handleResponsiveIframes() {
+    const isMobile = window.innerWidth <= 768;
+    const iframes = document.querySelectorAll('.weather-iframe, .crypto-iframe');
+    
+    iframes.forEach(iframe => {
+        // Reset any inline styling first
+        iframe.style.height = '';
+        iframe.style.width = '';
+        
+        iframe.addEventListener('load', () => {
+            try {
+                if (isMobile) {
+                    // On mobile, use container-based sizing
+                    const container = iframe.closest('.iframe-container');
+                    if (container) {
+                        iframe.style.position = 'absolute';
+                        iframe.style.top = '0';
+                        iframe.style.left = '0';
+                        iframe.style.width = '100%';
+                        iframe.style.height = '100%';
+                    }
+                } else {
+                    // On desktop, try to size based on content
+                    try {
+                        const height = iframe.contentDocument.body.scrollHeight;
+                        iframe.style.height = `${height}px`;
+                    } catch (e) {
+                        // Fallback if cross-origin issues
+                        iframe.style.height = '400px';
+                    }
+                }
+            } catch (e) {
+                console.warn(`Unable to resize iframe:`, e);
+            }
+        });
+    });
+}
+
+// Call on load and resize
+window.addEventListener('DOMContentLoaded', handleResponsiveIframes);
+window.addEventListener('resize', handleResponsiveIframes);
+
+// Original iframe sizing code 
 function setupIframeResizing(iframeClass) {
     const iframe = document.querySelector(`.${iframeClass}`);
     if (iframe) {
         iframe.addEventListener('load', () => {
             try {
-                const height = iframe.contentDocument.body.scrollHeight;
-                const width = iframe.contentDocument.body.scrollWidth;
-                iframe.style.height = `${height}px`;
-                iframe.style.width = `${width}px`;
+                if (window.innerWidth > 768) {
+                    const height = iframe.contentDocument.body.scrollHeight;
+                    const width = iframe.contentDocument.body.scrollWidth;
+                    iframe.style.height = `${height}px`;
+                    iframe.style.width = `${width}px`;
+                }
             } catch (e) {
                 console.warn(`Unable to resize ${iframeClass}:`, e);
             }
