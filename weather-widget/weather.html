@@ -7,31 +7,31 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="weather.css">
     <title>Weather App</title>
-    <!-- Add a base target to ensure all links open in parent window -->
     <base target="_parent">
-    <!-- Add inline styles to make the widget iframe-friendly -->
+    <!-- Additional styles to eliminate any space issues -->
     <style>
-        /* These styles only apply when inside an iframe */
-        @media (max-width: 700px) {
-            .container {
-                border-radius: 15px;
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            background-color: transparent !important;
+        }
+        
+        /* Force container to take available width */
+        .container {
+            margin: 0 auto;
+        }
+        
+        /* Adjust content when viewed in iframe */
+        @media (max-width: 500px) {
+            .days-list li .bx {
+                font-size: 1.25rem;
             }
             
-            .today-weather .bx {
-                font-size: 2.5rem;
-            }
-            
-            .weather-temp {
-                font-size: 2.2rem;
-            }
-            
-            .days-list {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            
-            .days-list li {
-                min-width: 70px;
+            .days-list li span {
+                font-size: 0.8rem;
             }
         }
     </style>
@@ -59,15 +59,15 @@
         <div class="right-info">
             <div class="day-info">
                 <div>
-                    <span class="title"></span>
+                    <span class="title">PRECIPITATION</span>
                     <span class="value"></span>
                 </div>
                 <div>
-                    <span class="title"></span>
+                    <span class="title">HUMIDITY</span>
                     <span class="value"></span>
                 </div>
                 <div>
-                    <span class="title"></span>
+                    <span class="title">WIND SPEED</span>
                     <span class="value"></span>
                 </div>
             </div>
@@ -102,23 +102,68 @@
     </div>
 
     <script src="weather.js"></script>
-    <!-- Add iframe communication script -->
     <script>
-        // Helper function to detect if we're in an iframe
+        // Improved iframe detection and sizing
         function isInIframe() {
             try {
                 return window.self !== window.top;
             } catch (e) {
-                return true; // If there's an error, we're probably in an iframe with cross-origin issues
+                return true;
             }
         }
         
-        // Adjust styling when in iframe
-        if (isInIframe()) {
-            document.body.style.height = 'auto';
-            document.body.style.padding = '10px';
-            document.body.style.background = 'transparent';
+        // Notify parent frame about our dimensions
+        function notifyParentSize() {
+            if (isInIframe()) {
+                const container = document.querySelector('.container');
+                const height = container.offsetHeight;
+                const width = container.offsetWidth;
+                
+                window.parent.postMessage({
+                    type: 'resize',
+                    height: height,
+                    width: width
+                }, '*');
+                
+                // Also use direct styling to remove any extra space
+                document.body.style.height = height + 'px';
+                document.body.style.width = '100%';
+                document.body.style.maxWidth = width + 'px';
+                document.body.style.overflow = 'hidden';
+            }
         }
+        
+        // Fix sizing issues
+        document.addEventListener('DOMContentLoaded', function() {
+            if (isInIframe()) {
+                // Immediately apply styles to eliminate black space
+                document.body.style.background = 'transparent';
+                document.body.style.margin = '0';
+                document.body.style.padding = '0';
+                document.body.style.overflow = 'hidden';
+                
+                // Initial notification
+                setTimeout(notifyParentSize, 100);
+                
+                // Set up resize event
+                window.addEventListener('resize', notifyParentSize);
+                
+                // Make sure we adjust size after weather data loads
+                setTimeout(notifyParentSize, 1000);
+                setTimeout(notifyParentSize, 2000);
+            }
+        });
+        
+        // Override the button click to prevent the prompt from causing layout issues
+        document.querySelector('.loc-button').addEventListener('click', function(e) {
+            e.preventDefault();
+            const location = prompt('Enter location:');
+            if (location && typeof fetchWeatherData === 'function') {
+                fetchWeatherData(location);
+                // Update size after data loads
+                setTimeout(notifyParentSize, 1000);
+            }
+        });
     </script>
 </body>
 
