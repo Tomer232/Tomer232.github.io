@@ -262,13 +262,8 @@ header .programming-photo img {
     width: 100%;
     border-radius: var(--border-radius);
     overflow: hidden;
-    background-color: transparent;
+    background-color: var(--background);
     position: relative;
-    min-height: 300px;
-    height: 550px; /* Fixed height for consistency */
-    margin: 0;
-    padding: 0;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .project-video,
@@ -305,40 +300,21 @@ iframe {
 }
 
 .widgets .card {
-    height: auto;
-    min-height: 600px;
-    display: flex;
-    flex-direction: column;
-    padding: var(--spacing-md);
+    height: 600px;
 }
 
 .widgets .card .content {
     flex: 1;
     display: flex;
     flex-direction: column;
+    gap: var(--spacing-md);
 }
 
 .widgets .card h4 {
-    margin-bottom: var(--spacing-md);
+    font-size: 1.5rem;
+    font-weight: 500;
     text-align: center;
-}
-
-.widgets .card .content .iframe-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.weather-iframe,
-.crypto-iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100% !important;
-    height: 100% !important;
-    border: none;
-    overflow: hidden;
-    background-color: transparent;
+    margin: 0;
 }
 
 /* Common Card Elements */
@@ -360,6 +336,16 @@ iframe {
 .card .btn:hover {
     background-color: var(--primary-dark);
     border-color: var(--primary-dark);
+}
+
+.weather-iframe,
+.crypto-iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-height: 400px;
+    max-height: 100%;
+    width: 100% !important;
 }
 
 /* Footer */
@@ -518,14 +504,6 @@ footer .column > a:hover {
     footer {
         grid-template-columns: 1fr 200px;
     }
-    
-    .iframe-container {
-        height: 600px; /* Taller on mobile to accommodate layout */
-    }
-    
-    .widgets .card {
-        min-height: 650px;
-    }
 }
 
 @media (width < 600px) {
@@ -545,9 +523,5 @@ footer .column > a:hover {
 
     footer {
         grid-template-columns: 1fr;
-    }
-    
-    .iframe-container {
-        height: 650px; /* Even taller for smaller screens */
     }
 }
