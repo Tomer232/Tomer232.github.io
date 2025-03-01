@@ -7,10 +7,37 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="weather.css">
     <title>Weather App</title>
+    <!-- Add a base target to ensure all links open in parent window -->
+    <base target="_parent">
+    <!-- Add inline styles to make the widget iframe-friendly -->
+    <style>
+        /* These styles only apply when inside an iframe */
+        @media (max-width: 700px) {
+            .container {
+                border-radius: 15px;
+            }
+            
+            .today-weather .bx {
+                font-size: 2.5rem;
+            }
+            
+            .weather-temp {
+                font-size: 2.2rem;
+            }
+            
+            .days-list {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .days-list li {
+                min-width: 70px;
+            }
+        }
+    </style>
 </head>
 
 <body>
-
     <div class="container">
         <div class="left-info">
             <div class="pic-gradient"></div>
@@ -24,9 +51,7 @@
             </div>
             <div class="today-weather">
                 <i class='bx bx-sun'></i>
-                <h1 class="weather-temp">
-
-                </h1>
+                <h1 class="weather-temp"></h1>
                 <h3></h3>
             </div>
         </div>
@@ -73,13 +98,28 @@
             <div class="btn-container">
                 <button class="loc-button">Search Location</button>
             </div>
-
         </div>
-
     </div>
 
     <script src="weather.js"></script>
-
+    <!-- Add iframe communication script -->
+    <script>
+        // Helper function to detect if we're in an iframe
+        function isInIframe() {
+            try {
+                return window.self !== window.top;
+            } catch (e) {
+                return true; // If there's an error, we're probably in an iframe with cross-origin issues
+            }
+        }
+        
+        // Adjust styling when in iframe
+        if (isInIframe()) {
+            document.body.style.height = 'auto';
+            document.body.style.padding = '10px';
+            document.body.style.background = 'transparent';
+        }
+    </script>
 </body>
 
 </html>
