@@ -65,55 +65,95 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// Iframe Sizing with postMessage support
+// Replace the setupIframeResizing function in your PortfolioV1.js with this enhanced version
+
+// Improved iframe sizing function
 function setupIframeResizing(iframeClass) {
     const iframe = document.querySelector(`.${iframeClass}`);
     if (!iframe) return;
     
-    // Initial size setup
-    iframe.addEventListener('load', () => {
-        try {
-            // Try to get dimensions from iframe content directly
-            const height = iframe.contentDocument.body.scrollHeight;
-            const width = iframe.contentDocument.body.scrollWidth;
-            iframe.style.height = `${height}px`;
-            iframe.style.width = `${width}px`;
-        } catch (e) {
-            console.warn(`Unable to resize ${iframeClass} directly:`, e);
-            // This might happen due to cross-origin restrictions
-            // The postMessage approach below will handle it
-        }
-    });
-    
-    // Listen for resize messages from the iframe content
-    window.addEventListener('message', (event) => {
+    // Handle cross-origin communication
+    window.addEventListener('message', function(event) {
         if (event.data && event.data.type === 'resize') {
-            // Make sure we only resize the correct iframe
+            // Make sure this message is for this iframe
             if (event.source === iframe.contentWindow) {
-                const { width, height } = event.data;
-                
-                // Apply dimensions with some padding
-                iframe.style.height = `${height + 20}px`;
-                
-                // Also resize the container if needed
                 const container = iframe.closest('.iframe-container');
+                
+                // Remove any fixed dimensions that might be causing black space
+                iframe.style.height = '100%';
+                iframe.style.width = '100%';
+                
+                // Ensure container has the right size
                 if (container) {
-                    container.style.height = `${height + 40}px`;
+                    container.style.height = `${event.data.height + 20}px`;
+                    container.style.minHeight = `${event.data.height}px`;
+                    container.style.overflow = 'hidden';
                 }
                 
-                // Adjust card height if needed
-                const card = iframe.closest('.card');
+                // Adjust parent card if needed
+                const card = container ? container.closest('.card') : null;
                 if (card) {
-                    // Make sure the card is tall enough
-                    const minCardHeight = height + 150; // Add space for heading and buttons
-                    if (card.offsetHeight < minCardHeight) {
-                        card.style.height = `${minCardHeight}px`;
-                    }
+                    const totalHeight = event.data.height + 
+                                       card.querySelector('h4').offsetHeight + 
+                                       40; // padding
+                    
+                    // Set min-height instead of fixed height
+                    card.style.minHeight = `${totalHeight}px`;
                 }
             }
         }
     });
+    
+    // Try direct resize on load
+    iframe.addEventListener('load', function() {
+        try {
+            // Direct access attempt (will work only for same-origin iframes)
+            iframe.style.height = '100%';
+            iframe.style.width = '100%';
+            
+            // Force a resize message after load
+            setTimeout(() => {
+                iframe.contentWindow.postMessage({ type: 'requestResize' }, '*');
+            }, 500);
+        } catch (e) {
+            console.log('Cannot directly access iframe content:', e);
+        }
+    });
 }
+
+// Additional function to ensure iframes are properly sized
+function ensureIframesResponsive() {
+    // Find all iframes in the widgets section
+    const iframes = document.querySelectorAll('.widgets iframe');
+    
+    iframes.forEach(iframe => {
+        // Remove any fixed dimensions
+        iframe.style.height = '100%';
+        iframe.style.width = '100%';
+        
+        // Make sure container is properly sized
+        const container = iframe.closest('.iframe-container');
+        if (container) {
+            container.style.overflow = 'hidden';
+        }
+    });
+}
+
+// Run on page load and periodically to ensure proper sizing
+document.addEventListener('DOMContentLoaded', function() {
+    // Set up iframe resizing for both widgets
+    setupIframeResizing('weather-iframe');
+    setupIframeResizing('crypto-iframe');
+    
+    // Initial check
+    ensureIframesResponsive();
+    
+    // Periodic check to ensure proper sizing
+    setInterval(ensureIframesResponsive, 2000);
+    
+    // Also check on window resize
+    window.addEventListener('resize', ensureIframesResponsive);
+});
 
 // Setup iframe sizing for both widgets
 setupIframeResizing('weather-iframe');
