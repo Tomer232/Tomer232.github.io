@@ -124,39 +124,3 @@ locButton.addEventListener('click', () => {
 
     fetchWeatherData(location);
 });
-
-// Helper function to notify parent iframe about size changes
-function notifyParentAboutSize() {
-    // Check if we're in an iframe
-    if (window.parent !== window) {
-        const container = document.querySelector('.container');
-        const width = container.offsetWidth;
-        const height = container.offsetHeight;
-        
-        // Send message to parent with our dimensions
-        window.parent.postMessage({
-            type: 'resize',
-            width: width,
-            height: height
-        }, '*');
-    }
-}
-
-// Run on load and whenever window resizes
-window.addEventListener('load', notifyParentAboutSize);
-window.addEventListener('resize', notifyParentAboutSize);
-
-// Also update after fetching data as content might change size
-const originalFetchWeatherData = window.fetchWeatherData;
-window.fetchWeatherData = function(location) {
-    originalFetchWeatherData(location);
-    
-    // Wait a bit for DOM to update before sending size
-    setTimeout(notifyParentAboutSize, 500);
-};
-
-// Make sure the widget looks good inside an iframe
-if (window.parent !== window) {
-    document.body.style.height = 'auto';
-    document.body.style.background = 'transparent';
-}
