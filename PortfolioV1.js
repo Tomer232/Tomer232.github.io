@@ -65,66 +65,54 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// iframe handling for better mobile responsiveness
-function handleResponsiveIframes() {
-    const isMobile = window.innerWidth <= 768;
-    const iframes = document.querySelectorAll('.weather-iframe, .crypto-iframe');
-    
-    iframes.forEach(iframe => {
-        // Reset any inline styling first
-        iframe.style.height = '';
-        iframe.style.width = '';
-        
-        iframe.addEventListener('load', () => {
-            try {
-                if (isMobile) {
-                    // On mobile, use container-based sizing
-                    const container = iframe.closest('.iframe-container');
-                    if (container) {
-                        iframe.style.position = 'absolute';
-                        iframe.style.top = '0';
-                        iframe.style.left = '0';
-                        iframe.style.width = '100%';
-                        iframe.style.height = '100%';
-                    }
-                } else {
-                    // On desktop, try to size based on content
-                    try {
-                        const height = iframe.contentDocument.body.scrollHeight;
-                        iframe.style.height = `${height}px`;
-                    } catch (e) {
-                        // Fallback if cross-origin issues
-                        iframe.style.height = '400px';
-                    }
-                }
-            } catch (e) {
-                console.warn(`Unable to resize iframe:`, e);
-            }
-        });
-    });
-}
-
-// Call on load and resize
-window.addEventListener('DOMContentLoaded', handleResponsiveIframes);
-window.addEventListener('resize', handleResponsiveIframes);
-
-// Original iframe sizing code 
+// Iframe Sizing with postMessage support
 function setupIframeResizing(iframeClass) {
     const iframe = document.querySelector(`.${iframeClass}`);
-    if (iframe) {
-        iframe.addEventListener('load', () => {
-            try {
-                if (window.innerWidth > 768) {
-                    const height = iframe.contentDocument.body.scrollHeight;
-                    const width = iframe.contentDocument.body.scrollWidth;
-                    iframe.style.height = `${height}px`;
-                    iframe.style.width = `${width}px`;
+    if (!iframe) return;
+    
+    // Initial size setup
+    iframe.addEventListener('load', () => {
+        try {
+            // Try to get dimensions from iframe content directly
+            const height = iframe.contentDocument.body.scrollHeight;
+            const width = iframe.contentDocument.body.scrollWidth;
+            iframe.style.height = `${height}px`;
+            iframe.style.width = `${width}px`;
+        } catch (e) {
+            console.warn(`Unable to resize ${iframeClass} directly:`, e);
+            // This might happen due to cross-origin restrictions
+            // The postMessage approach below will handle it
+        }
+    });
+    
+    // Listen for resize messages from the iframe content
+    window.addEventListener('message', (event) => {
+        if (event.data && event.data.type === 'resize') {
+            // Make sure we only resize the correct iframe
+            if (event.source === iframe.contentWindow) {
+                const { width, height } = event.data;
+                
+                // Apply dimensions with some padding
+                iframe.style.height = `${height + 20}px`;
+                
+                // Also resize the container if needed
+                const container = iframe.closest('.iframe-container');
+                if (container) {
+                    container.style.height = `${height + 40}px`;
                 }
-            } catch (e) {
-                console.warn(`Unable to resize ${iframeClass}:`, e);
+                
+                // Adjust card height if needed
+                const card = iframe.closest('.card');
+                if (card) {
+                    // Make sure the card is tall enough
+                    const minCardHeight = height + 150; // Add space for heading and buttons
+                    if (card.offsetHeight < minCardHeight) {
+                        card.style.height = `${minCardHeight}px`;
+                    }
+                }
             }
-        });
-    }
+        }
+    });
 }
 
 // Setup iframe sizing for both widgets
