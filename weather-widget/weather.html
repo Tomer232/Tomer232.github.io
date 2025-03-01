@@ -7,37 +7,10 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="weather.css">
     <title>Weather App</title>
-    <base target="_parent">
-    <!-- Additional styles to eliminate any space issues -->
-    <style>
-        html, body {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            width: 100%;
-            overflow: hidden;
-            background-color: transparent !important;
-        }
-        
-        /* Force container to take available width */
-        .container {
-            margin: 0 auto;
-        }
-        
-        /* Adjust content when viewed in iframe */
-        @media (max-width: 500px) {
-            .days-list li .bx {
-                font-size: 1.25rem;
-            }
-            
-            .days-list li span {
-                font-size: 0.8rem;
-            }
-        }
-    </style>
 </head>
 
 <body>
+
     <div class="container">
         <div class="left-info">
             <div class="pic-gradient"></div>
@@ -51,7 +24,9 @@
             </div>
             <div class="today-weather">
                 <i class='bx bx-sun'></i>
-                <h1 class="weather-temp"></h1>
+                <h1 class="weather-temp">
+
+                </h1>
                 <h3></h3>
             </div>
         </div>
@@ -59,15 +34,15 @@
         <div class="right-info">
             <div class="day-info">
                 <div>
-                    <span class="title">PRECIPITATION</span>
+                    <span class="title"></span>
                     <span class="value"></span>
                 </div>
                 <div>
-                    <span class="title">HUMIDITY</span>
+                    <span class="title"></span>
                     <span class="value"></span>
                 </div>
                 <div>
-                    <span class="title">WIND SPEED</span>
+                    <span class="title"></span>
                     <span class="value"></span>
                 </div>
             </div>
@@ -98,73 +73,13 @@
             <div class="btn-container">
                 <button class="loc-button">Search Location</button>
             </div>
+
         </div>
+
     </div>
 
     <script src="weather.js"></script>
-    <script>
-        // Improved iframe detection and sizing
-        function isInIframe() {
-            try {
-                return window.self !== window.top;
-            } catch (e) {
-                return true;
-            }
-        }
-        
-        // Notify parent frame about our dimensions
-        function notifyParentSize() {
-            if (isInIframe()) {
-                const container = document.querySelector('.container');
-                const height = container.offsetHeight;
-                const width = container.offsetWidth;
-                
-                window.parent.postMessage({
-                    type: 'resize',
-                    height: height,
-                    width: width
-                }, '*');
-                
-                // Also use direct styling to remove any extra space
-                document.body.style.height = height + 'px';
-                document.body.style.width = '100%';
-                document.body.style.maxWidth = width + 'px';
-                document.body.style.overflow = 'hidden';
-            }
-        }
-        
-        // Fix sizing issues
-        document.addEventListener('DOMContentLoaded', function() {
-            if (isInIframe()) {
-                // Immediately apply styles to eliminate black space
-                document.body.style.background = 'transparent';
-                document.body.style.margin = '0';
-                document.body.style.padding = '0';
-                document.body.style.overflow = 'hidden';
-                
-                // Initial notification
-                setTimeout(notifyParentSize, 100);
-                
-                // Set up resize event
-                window.addEventListener('resize', notifyParentSize);
-                
-                // Make sure we adjust size after weather data loads
-                setTimeout(notifyParentSize, 1000);
-                setTimeout(notifyParentSize, 2000);
-            }
-        });
-        
-        // Override the button click to prevent the prompt from causing layout issues
-        document.querySelector('.loc-button').addEventListener('click', function(e) {
-            e.preventDefault();
-            const location = prompt('Enter location:');
-            if (location && typeof fetchWeatherData === 'function') {
-                fetchWeatherData(location);
-                // Update size after data loads
-                setTimeout(notifyParentSize, 1000);
-            }
-        });
-    </script>
+
 </body>
 
 </html>
