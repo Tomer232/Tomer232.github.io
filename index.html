@@ -28,16 +28,44 @@
             <div class="content">
                 <span class="blur"></span>
                 <span class="blur"></span>
-                <h1>Hi, I'm <span>Tomer</span>, Computer Science Student</h1>
+                <h1>Hi, I'm <span>Tomer</span>, Software Developer</h1>
                 <p class="skills">
-                    PYTHON • JAVA • JS • HTML • CSS • C/C++ • SQL
+                    PYTHON • SQLITE • DATA ANALYSIS • JS • MONGODB • NEURAL NETWORKS
                 </p>
                 <button class="btn cv-btn" onclick="window.open('Documents/Tomer Karmazin CV.pdf', '_blank');">
                     CHECK OUT MY CV!
                 </button>
             </div>
-            <div class="programming-photo">
-                <img src="Documents/Programming-photo.png" alt="Programming Illustration">
+            
+            <!-- Featured Project Showcase - Replacing programming-photo -->
+            <div class="featured-project" onclick="window.open('https://clever-recreation-production.up.railway.app/', '_blank')">
+                <div class="project-header">
+                    <span class="project-icon"><i class="ri-route-line"></i></span>
+                    <h3 class="project-title">Off-Road Route Planner (ORP)</h3>
+                </div>
+                
+                <img src="Documents/orp-screenshot.png" alt="Off-Road Route Planner Interface" class="project-image">
+                
+                <p class="project-description">
+                    A full-stack route optimization system for off-road terrain using custom A* pathfinding. The system processes elevation data from Google APIs to generate terrain-aware paths that avoid slopes exceeding 30% incline. Features interactive mapping, real-time elevation analysis, and multi-waypoint planning for areas without roads or trails.
+                </p>
+                
+                <div class="project-tech">
+                    <span class="tech-tag">React.js</span>
+                    <span class="tech-tag">Python Flask</span>
+                    <span class="tech-tag">MongoDB</span>
+                    <span class="tech-tag">Google Maps API</span>
+                    <span class="tech-tag">A* Algorithm</span>
+                </div>
+                
+                <div class="project-buttons">
+                    <a href="https://clever-recreation-production.up.railway.app/" class="demo-btn" target="_blank" onclick="event.stopPropagation();">
+                        <i class="ri-external-link-line"></i> View Live Demo
+                    </a>
+                    <a href="https://github.com/Tomer232/route-optimization-app" class="github-btn" target="_blank" onclick="event.stopPropagation();">
+                        <i class="ri-github-fill"></i> GitHub
+                    </a>
+                </div>
             </div>
         </header>
 
@@ -154,6 +182,7 @@
                 <h4>Contact</h4>
                 <a href="#">Tomer Karmazin</a>
                 <a href="mailto:tomer@jeepsea.co.il">tomer@jeepsea.co.il</a>
+                <a href="#">Tel-Aviv, Israel</a>
             </div>
         </footer>
 
@@ -166,9 +195,7 @@
                 <span class="close-btn" onclick="closePopup()">&times;</span>
                 <h2>About Me</h2>
                 <p class="text">
-                    Passionate software development student pursuing expertise in software development.
-                    Committed to making a positive impact by creating innovative solutions in AI, finance, cyber security, and blockchain.
-                    Love doing data analysis and building automations with diffrent API's !
+                    I'm a Computer Science graduate with a strong focus on AI, data analysis, and real-world system design. I specialize in Python programming and enjoy solving complex problems through clean, structured code. My work combines algorithmic thinking with practical implementation—ranging from market data analysis to terrain-aware pathfinding systems. I'm driven by a deep understanding of how systems operate and a constant push to optimize and improve. Ready to contribute in fast-paced, high-impact environments while continuing to grow as an engineer.
                 </p>
                 <br>
                 <br>
