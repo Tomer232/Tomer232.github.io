@@ -52,6 +52,11 @@ a {
     padding: 5rem 2rem;
 }
 
+/* Header Container Override */
+header.container {
+    padding-top: 1rem;
+}
+
 /* Navigation */
 .navbar {
     max-width: var(--container-width);
@@ -117,11 +122,11 @@ a {
 /* Header Section */
 header {
     position: relative;
-    padding-top: var(--spacing-lg);
+    padding-top: var(--spacing-sm);
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    align-items: center;
-    gap: var(--spacing-lg);
+    grid-template-columns: 1fr 1.5fr;
+    align-items: start;
+    gap: var(--spacing-xl);
 }
 
 .blur {
@@ -148,6 +153,140 @@ header .content p {
     color: var(--text-light);
 }
 
+/* Featured Project Showcase */
+.featured-project {
+    position: relative;
+    background: linear-gradient(135deg, var(--card-bg) 0%, var(--card-hover) 100%);
+    border: 2px solid var(--primary);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-md);
+    box-shadow: 0 20px 40px rgba(29, 78, 216, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.featured-project:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 50px rgba(29, 78, 216, 0.2);
+    border-color: var(--text-white);
+}
+
+.featured-project::before {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, var(--primary), transparent, var(--primary));
+    border-radius: var(--border-radius-lg);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.featured-project:hover::before {
+    opacity: 0.3;
+}
+
+.project-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+}
+
+.project-icon {
+    background-color: var(--primary);
+    padding: 0.75rem;
+    border-radius: var(--border-radius);
+    font-size: 1.5rem;
+    color: var(--text-white);
+}
+
+.project-title {
+    color: var(--text-white);
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.project-image {
+    width: 100%;
+    border-radius: var(--border-radius);
+    margin-bottom: var(--spacing-sm);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.project-description {
+    color: var(--text-light);
+    margin-bottom: var(--spacing-sm);
+    line-height: 1.6;
+}
+
+.project-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.tech-tag {
+    background-color: rgba(29, 78, 216, 0.2);
+    color: var(--primary);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.featured-project:hover .tech-tag {
+    background-color: var(--primary);
+    color: var(--text-white);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(29, 78, 216, 0.3);
+}
+
+.project-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+}
+
+.demo-btn {
+    flex: 1;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: var(--text-white);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius);
+    text-align: center;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.demo-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(29, 78, 216, 0.3);
+}
+
+.github-btn {
+    background-color: transparent;
+    color: var(--text-white);
+    border: 2px solid var(--text-white);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius);
+    transition: all 0.3s ease;
+    text-decoration: none;
+    text-align: center;
+}
+
+.github-btn:hover {
+    background-color: var(--text-white);
+    color: var(--background);
+}
+
+/* Legacy programming photo styles (keeping for backward compatibility) */
 header .programming-photo {
     position: relative;
 }
@@ -485,6 +624,11 @@ footer .column > a:hover {
 
     header {
         grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+    }
+
+    header .featured-project {
+        order: -1;
     }
 
     header .programming-photo {
@@ -523,5 +667,9 @@ footer .column > a:hover {
 
     footer {
         grid-template-columns: 1fr;
+    }
+
+    .project-buttons {
+        flex-direction: column;
     }
 }
