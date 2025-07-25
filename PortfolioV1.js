@@ -65,6 +65,41 @@ document.addEventListener('click', (e) => {
     }
 });
 
+// Featured Project Interaction
+document.addEventListener('DOMContentLoaded', () => {
+    const featuredProject = document.querySelector('.featured-project');
+    
+    if (featuredProject) {
+        // Add keyboard accessibility
+        featuredProject.setAttribute('tabindex', '0');
+        featuredProject.setAttribute('role', 'button');
+        featuredProject.setAttribute('aria-label', 'View Off-Road Route Planner project');
+        
+        // Handle keyboard navigation
+        featuredProject.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                window.open('https://clever-recreation-production.up.railway.app/', '_blank');
+            }
+        });
+        
+        // Add loading state for project buttons
+        const projectButtons = featuredProject.querySelectorAll('a');
+        projectButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                // Add subtle loading indication
+                const originalText = button.innerHTML;
+                button.style.opacity = '0.7';
+                
+                // Reset after a short delay
+                setTimeout(() => {
+                    button.style.opacity = '1';
+                }, 200);
+            });
+        });
+    }
+});
+
 // Iframe Sizing
 function setupIframeResizing(iframeClass) {
     const iframe = document.querySelector(`.${iframeClass}`);
@@ -85,3 +120,16 @@ function setupIframeResizing(iframeClass) {
 // Setup iframe sizing for both widgets
 setupIframeResizing('weather-iframe');
 setupIframeResizing('crypto-iframe');
+
+// Scroll to Top Function (for backward compatibility)
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
+
+// Close Popup Function (for backward compatibility)
+function closePopup() {
+    togglePopup(false);
+}
